@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 var keys = require("./keys.js");
-var spotify = new spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 var Spotify = require("node-spotify-api");
 var request = require("request");
 var fs = require("fs");
@@ -18,25 +18,25 @@ function bandsInArea(bandQuery) {
     "/events?app_id=codingbootcamp#";
 
   console.log(queryURL);
-  request(queryURL, function(error, response, body) {
+  request(queryURL, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       var concertData = JSON.parse(body);
 
-      var concertDateTime = concertData[0].datetime;
+      var concertDateTime = concertData[0].datetime
       var momentDateTime = moment().format("L");
 
       console.log("------------------------------");
 
       console.log(
         "Venue Name : " +
-          concertData[0].venue.name +
-          "\nVenue Location: " +
-          concertData[0].venue.city +
-          "," +
-          concertData[0].venue.country +
-          "\nDate of the Event: " +
-          momentDateTime +
-          "\n--------------------------"
+        concertData[0].venue.name +
+        "\nVenue Location: " +
+        concertData[0].venue.city +
+        "," +
+        concertData[0].venue.country +
+        "\nDate of the Event: " +
+        momentDateTime +
+        "\n--------------------------"
       );
     }
   });
@@ -51,35 +51,35 @@ function findMovie(movieQUery) {
 
   console.log(queryURL);
 
-  request(queryURL, function(err, response, body) {
-    if (!err && response.statusCode === 200) {
+  request(queryURL, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
       var movieData = JSON.parse(body);
       console.log("----------------------------------");
       console.log(
         "Movie Title: " +
-          movieData.Title +
-          "\nYear: " +
-          movieData.released +
-          "\nIMDB Rating: " +
-          movieData.imdb.Rating +
-          "\n Rotten Tomatoes Rating: " +
-          movieData.Ratings[1].Value +
-          "\nCountry: " +
-          movieData.Country +
-          "\nLanguage: " +
-          movieData.Language +
-          "\nPlot: " +
-          +movieData.Plot +
-          "\nActors: " +
-          movieData.Actors +
-          "\n-----------------------------------"
+        movieData.Title +
+        "\nYear: " +
+        movieData.released +
+        "\nIMDB Rating: " +
+        movieData.imdb.Rating +
+        "\n Rotten Tomatoes Rating: " +
+        movieData.Ratings[1].Value +
+        "\nCountry: " +
+        movieData.Country +
+        "\nLanguage: " +
+        movieData.Language +
+        "\nPlot: " +
+        +movieData.Plot +
+        "\nActors: " +
+        movieData.Actors +
+        "\n-----------------------------------"
       );
     }
   });
 }
 findMovie();
 
-var askIt = function(commands, otherData) {
+var askIt = function (commands, otherData) {
   switch (commands) {
     case "concert-this":
       bandsInArea(otherData);
@@ -98,8 +98,8 @@ var askIt = function(commands, otherData) {
   }
 };
 
-var doWhatItSays = function() {
-  fs.readFile("random.txt", "utf8", function(error, data) {
+var doWhatItSays = function () {
+  fs.readFile("random.txt", "utf8", function (error, data) {
     if (error) throw error;
     var randomText = data.split(",");
 
@@ -113,36 +113,26 @@ var doWhatItSays = function() {
 
 askIt(command, input);
 
-function spotifySong(parameter) {
-  var searchForTrack;
-  if (parameter === undefined) {
-    searchForTrack = "The Sign by Ace of Base";
-  } else {
-    searchForTrack = parameter;
+function spotifySong(songSearch) {
+
+  if (songSearch === undefined || null) {
+    songSearch = "The Sign by Ace of Base";
   }
-  spotify.search(
-    {
+  spotify.search({
       type: "track",
-      query: searchForTrack
+      query: songSearch
     },
-    function(error, data) {
+    function (error, data) {
       if (error) {
-        console.log("Error occured: " + error);
-        return;
+        return console.log("Error occured: " + error);
+
       } else {
-        for (i = 0; i < data.tracks.items.length && i < 5; i++) {}
-        Log("\n-------------------------------------\n");
-        Log("Artist: " + data.tracks.items[0].artists[0].name);
-        Log("Song" + data.tracks.items[0].name);
-        Log("Preview: " + data.tracks.items[3].preview_url);
-        Log("Album: " + data.tracks.items[0].album.name);
-        Log("\n--------------------------------------\n");
+        for (i = 0; i < data.tracks.items.length && i < 5; i++) {
+          var musQuery = data.tracks.items[i];
+          console.log("Artist: " + musQuery.artists[0].name + "\nSong Name: " + musQuery.name + "\nLink to Song: " + musQuery.preview_url + "\nAlbum Name: " + musQuery.album.name + "\n----------------------------------");
+
+
+        }
       }
-    }
-  );
+    })
 }
-
-// var filename = ".log.txt";
-// var log = require("simple-node-logger").createFileLog(filename);
-
-// log.setLevel('all');
