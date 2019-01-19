@@ -21,7 +21,7 @@ do-what-it-says.
 
 This command will bring info from the OMDB API, and will display the movie's title, release year, IMDB rating, rotten tomatoes rating,country where it was filmed, the language, and the actors.  The default if no movie title is including and you simply write "movie-this" will be Mr. Nobody.
 
-# spotify this:
+# spotify-this:
 
 This command will bring the information for the song the user inputs.  The info includes the artist, song name, a link to spotify, and the album.  If there are more than one song with the name you type, it will return all of the results.  If you don't type a song it will default to "I saw the Sign" by Ace of Base.
 
