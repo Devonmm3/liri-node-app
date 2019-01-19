@@ -1,6 +1,11 @@
 # liri-node-app
 This App uses node in the command line so that the user can spotify songs, find concerts that are in town, and find info about movies.  
 
+# link to video:
+
+https://drive.google.com/file/d/1r2rDr4Wvw7RSZvfoRHvOz80X5iXAkTuX/view?usp=sharing
+
+
 # Technologies I used:
 node.js and Javascript. Also used the npm install for axios, moment and DotEnv.
 
